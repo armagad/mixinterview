@@ -1,1 +1,2 @@
-main: bin/mix
+web: web
+main: main
