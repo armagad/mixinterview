@@ -7,6 +7,7 @@ package main
 import (
 	"io/ioutil"
 	"net/http"
+	"os"
 	"regexp"
 )
 
@@ -65,5 +66,5 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":" + os.Getenv("PORT"), nil)
 }
