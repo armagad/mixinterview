@@ -28,7 +28,8 @@ func main() {
 	accessSecret := flags.String("access-secret", "h7oIpW5BcJ6adDGqWOfwhGColGLu8fQ6GMkTGidzrdiJr", "")
 	flags.Parse(os.Args[1:])
 
-	db, err := sql.Open("postgres", "user=mwhisenhunt sslmode=disable")
+	fmt.Println(os.Getenv("DATABASE_URL"))
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +37,7 @@ func main() {
 
 	// DROP TABLE twitter_urls;
 	// CREATE TABLE twitter_urls (url varchar, expanded_url varchar, created_at timestamp, id bigint, ts timestamp default current_timestamp, _ID serial PRIMARY KEY);
-	insertQry, err := db.Prepare("INSERT INTO twitter_urls VALUES ($1, $2, $3, $4)")
+	insertQry, err := db.Prepare("INSERT INTO twitter_urls VALUES ($1, $2, $3, $4, $5)")
 	if err != nil {
 		pretty.Print(err)
 		return
@@ -59,11 +60,12 @@ func main() {
 	demux.Tweet = func(tweet *twitter.Tweet) {
 
 		for _, url := range tweet.Entities.Urls {
-			fmt.Println(tweet.ID, tweet.CreatedAt, time.Now())
-			_, err := insertQry.Exec(url.URL, url.ExpandedURL, tweet.ID, tweet.CreatedAt)
+
+			_, err := insertQry.Exec(url.URL[13:], url.ExpandedURL, tweet.ID, tweet.CreatedAt, time.Now())
 			if err != nil {
 				pretty.Print(err)
 			}
+			fmt.Println(url.URL[13:])
 		}
 	}
 
