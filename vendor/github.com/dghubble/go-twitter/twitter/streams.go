@@ -79,14 +79,14 @@ type StreamUserParams struct {
 	Language      []string `url:"language,omitempty,comma"`
 	Locations     []string `url:"locations,omitempty,comma"`
 	Replies       string   `url:"replies,omitempty"`
-	StallWarnings *bool    `url:"stall_warnings,omitempty"`
+	StallWarnings bool     `url:"stall_warnings,omitempty"`
 	Track         []string `url:"track,omitempty,comma"`
 	With          string   `url:"with,omitempty"`
 }
 
 // User returns a stream of messages specific to the authenticated User.
 // https://dev.twitter.com/streaming/reference/get/user
-func (srv *StreamService) User(params *StreamUserParams) (*Stream, error) {
+func (srv *StreamService) User(params StreamUserParams) (*Stream, error) {
 	req, err := srv.user.New().Get("user.json").QueryStruct(params).Request()
 	if err != nil {
 		return nil, err
