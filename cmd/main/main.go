@@ -59,8 +59,8 @@ func streamTwitter() <-chan interface{} {
 		client     = twitter.NewClient(httpClient)          // Twitter Client
 	)
 
-	stream, err := client.Streams.User(twitter.StreamUserParams{
-		StallWarnings: true,
+	stream, err := client.Streams.User(& twitter.StreamUserParams{
+		StallWarnings: twitter.Bool(true),
 		With:          "followings",
 		Language:      []string{"en"}})
 	if err != nil {
