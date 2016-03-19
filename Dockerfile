@@ -1,6 +1,8 @@
 FROM ubuntu:14.04
 
 ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get -y install ca-certificates
+# RUN apt-get -y install curl
 
 ADD main /usr/local/bin/
 
