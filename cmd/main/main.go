@@ -48,6 +48,8 @@ func handleTweet(tweet *twitter.Tweet, insertQry *sql.Stmt) {
 		}
 		fmt.Println(url.URL[13:])
 	}
+	return
+	fmt.Println(insertQry)
 }
 
 func streamTwitter() <-chan interface{} {
@@ -59,7 +61,7 @@ func streamTwitter() <-chan interface{} {
 		client     = twitter.NewClient(httpClient)          // Twitter Client
 	)
 
-	stream, err := client.Streams.User(& twitter.StreamUserParams{
+	stream, err := client.Streams.User(&twitter.StreamUserParams{
 		StallWarnings: twitter.Bool(true),
 		With:          "followings",
 		Language:      []string{"en"}})

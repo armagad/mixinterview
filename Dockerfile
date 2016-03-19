@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ADD main /usr/local/bin/
 
-ENV DATABASE_URL postgres://172.17.0.1/?user=mix&sslmode=disable
+ENV DATABASE_URL postgres://db/?user=postgres&sslmode=disable
 
 
 # RUN apt-get -y --no-install-recommends install git #adduser

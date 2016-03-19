@@ -1,0 +1,9 @@
+version: '2'
+services:
+  db:
+    build: db
+  web:
+    build: .
+    command: main
+    depends_on:
+      - db
